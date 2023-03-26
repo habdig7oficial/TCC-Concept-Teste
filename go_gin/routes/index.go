@@ -23,7 +23,7 @@ func Hello(ctx *gin.Context){
 	
 
     var found []dbstruct
-	//id := 2
+	id := 2
 
     read, err := postgres.Query("SELECT * FROM teste")
     if err != nil {
@@ -47,10 +47,10 @@ func Hello(ctx *gin.Context){
     fmt.Print(found)
 
 
-	update := postgres.QueryRow(`UPDATE teste SET teste=true WHERE id=1`)
+	update := postgres.QueryRow(`UPDATE teste SET teste=true WHERE id=$1`, id)
 	fmt.Print("\n\nupdate - ", update, "\n\n")
 
-	delete := postgres.QueryRow(`DELETE FROM teste WHERE id=2;`)
+	delete := postgres.QueryRow(`DELETE FROM teste WHERE id=$1;`, id)
 	fmt.Print("\n\ndelete - ", delete, "\n\n")
 
 	params := ctx.Request.URL.Query().Get("hello")
