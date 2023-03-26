@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func Connect() string{
+func Connect() *sql.DB{
 	connStr := fmt.Sprintf("postgres://postgres:%s@db.gcuaszleoybibrbrobrp.supabase.co:6543/postgres", os.Getenv("DB_SENHA"))
 	fmt.Print(connStr)
 
@@ -23,16 +23,5 @@ func Connect() string{
 		fmt.Print(ping_err)
 	}
 
-	insert := db.QueryRow(`INSERT INTO teste(id, teste, random)
-		VALUES( 2, false, 93);`)
-	fmt.Print("\n\ninsert - ", insert, "\n\n")
-
-	update := db.QueryRow(`UPDATE teste SET teste=true WHERE id=1`)
-	fmt.Print("\n\nupdate - ", update, "\n\n")
-
-	delete := db.QueryRow(`DELETE FROM teste WHERE id=2;`)
-	fmt.Print("\n\ndelete - ", delete, "\n\n")
-
-
-	return fmt.Sprintf("%s",db)
+	return db
 }
