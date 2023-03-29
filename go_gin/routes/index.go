@@ -55,9 +55,13 @@ func Hello(ctx *gin.Context){
 		RAMDOM	float64
 	}
 
-	
+	var dummyStruct dbstruct;
 
-	found := config.SelectAll(postgres, columns, "teste", "id", true)
+	dummyStruct.ID = 0
+	dummyStruct.TESTE = false
+	dummyStruct.RAMDOM = 0
+
+	found := config.SelectAll(postgres, columns, "teste", "id", true, )
 
 	update := postgres.QueryRow(`UPDATE teste SET teste=true WHERE id=$1`, id)
 	fmt.Print("\n\nupdate - ", update, "\n\n")

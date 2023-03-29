@@ -28,7 +28,7 @@ type dbstruct struct {
 
 
 
-func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC bool,)  (found []dbstruct) {
+func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC bool)  (found []dbstruct) {
 
     columns:= cols
 
