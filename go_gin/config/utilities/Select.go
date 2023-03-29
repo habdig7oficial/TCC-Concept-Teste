@@ -28,7 +28,7 @@ type dbstruct struct {
 
 
 
-func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC bool)  (found []dbstruct) {
+func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC bool,)  (found []dbstruct) {
 
     columns:= cols
 
@@ -53,9 +53,9 @@ func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC b
 
     fmt.Print(mountedQuery+"\n")
 
-    //a := fmt.Sprintf
+    a := fmt.Sprintf("SELECT %s FROM %s ORDER BY %s %s;", mountedQuery, where, order_by, sort_query)
 
-    read, err := db.Query("SELECT $1 FROM $2 ORDER BY $3 $4;", mountedQuery, where, order_by, sort_query)
+    read, err := db.Query(a)
     if err != nil {
         fmt.Print(err)
 		return found

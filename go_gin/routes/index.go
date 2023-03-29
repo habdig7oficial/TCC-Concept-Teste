@@ -17,24 +17,45 @@ package routes
 
 import (
 	"fmt"
+	"context"
 	"go_gin/config"
 	"go_gin/config/utilities"
 	"github.com/gin-gonic/gin"
 )
-
 func Hello(ctx *gin.Context){
+	redis_ctx := context.Background()
+	cache := db.Cache()
+
+	fmt.Print(cache)
+
+	id := 2
+	mc := cache.Set(redis_ctx, fmt.Sprint("%s",id), `teste`, 0).Err()
+
+	fmt.Print(mc)
+	/**/
 
 	postgres := db.Connect()
 
 
 	insert := postgres.QueryRow(`INSERT INTO teste(id, teste, random)
-		VALUES( 2, false, 93);`)
+		VALUES( $1, $2, $3);`, id, false, 93)
 	fmt.Print("\n\ninsert - ", insert, "\n\n")
 
 	
-	id := 2
+	//call,cerr := postgres.Exec(`CALL teste_`)
+	//fmt.Print("\n\ninsert - ", insert, "\n\n")
+
+	//fmt.Print(call,"\n\n", cerr)
 
 	columns := []string{"*"}
+
+	type dbstruct struct {
+		ID     int8
+		TESTE	bool
+		RAMDOM	float64
+	}
+
+	
 
 	found := config.SelectAll(postgres, columns, "teste", "id", true)
 
