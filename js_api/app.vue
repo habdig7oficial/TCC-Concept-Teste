@@ -12,6 +12,18 @@
     <h1>Query Params: {{  posts.query_params }}</h1>
     <h1>Query Params: {{  posts.dbvalue }}</h1>
   </div>
+
+
+  <hr>
+
+  <form action="http://0.0.0.0:7777/" method="post">
+    <input name="id" type="number" placeholder="id">
+    <input name="bool" type="text" placeholder="bool">
+    <input name="random" type="number" placeholder="random">
+    <input value="Submit" type="submit">
+  </form>
+
+
 </template>
 
 <script setup lang="ts">
