@@ -21,60 +21,58 @@ import (
 )
 
 type dbstruct struct {
-    ID     int8
-    TESTE	bool
-    RAMDOM	float64
+	ID     int8
+	TESTE  bool
+	RAMDOM float64
 }
 
+func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC bool) (found []dbstruct) {
 
+	columns := cols
 
-func SelectAll(db *sql.DB, cols []string, where string, order_by string, IsASC bool)  (found []dbstruct) {
+	var sort_query string
+	if IsASC == true {
+		sort_query = "ASC"
+	} else {
+		sort_query = "DESC"
+	}
 
-    columns:= cols
+	fmt.Print(columns)
 
-    var sort_query string
-    if IsASC == true{
-        sort_query = "ASC"
-    }else{
-        sort_query = "DESC"
-    }
+	var mountedQuery string
+	for i := 0; i < len(columns); i++ {
+		if i < len(columns)-1 {
+			mountedQuery = fmt.Sprint(mountedQuery, columns[i], ", ")
+		} else {
+			mountedQuery = fmt.Sprint(mountedQuery, columns[i])
+		}
+		fmt.Print(i)
+	}
 
-    fmt.Print(columns)
+	fmt.Print(mountedQuery + "\n")
 
-    var mountedQuery string
-    for i := 0; i < len(columns); i++{
-        if i < len(columns) - 1{
-            mountedQuery =  fmt.Sprint(mountedQuery, columns[i], ", ")
-        } else{
-            mountedQuery =  fmt.Sprint(mountedQuery, columns[i])
-        }
-        fmt.Print(i)
-    }
+	//a := fmt.Sprintf("SELECT %s FROM %s ORDER BY %s %s;", mountedQuery, where, order_by, sort_query)
 
-    fmt.Print(mountedQuery+"\n")
-
-    a := fmt.Sprintf("SELECT %s FROM %s ORDER BY %s %s;", mountedQuery, where, order_by, sort_query)
-
-    read, err := db.Query(a)
-    if err != nil {
-        fmt.Print(err)
+	read, err := db.Query(`SELECT $1 FROM $2 ORDER BY $3 $4;`, mountedQuery, where, order_by, sort_query)
+	if err != nil {
+		fmt.Print(err)
 		return found
-    }
-    defer read.Close()
-    // Loop through rows, using Scan to assign column data to struct fields.
-    for read.Next() {
-        var row dbstruct
-        if err := read.Scan(&row.ID, &row.TESTE, &row.RAMDOM); err != nil {
-            fmt.Print(err)
+	}
+	defer read.Close()
+	// Loop through rows, using Scan to assign column data to struct fields.
+	for read.Next() {
+		var row dbstruct
+		if err := read.Scan(&row.ID, &row.TESTE, &row.RAMDOM); err != nil {
+			fmt.Print(err)
 			return found
-        }
-        found = append(found, row)
-    }
-    if err := read.Err(); err != nil {
-        fmt.Print(err)
+		}
+		found = append(found, row)
+	}
+	if err := read.Err(); err != nil {
+		fmt.Print(err)
 		return found
-    }
-    fmt.Print(found)
+	}
+	fmt.Print(found)
 
 	return found
 }
