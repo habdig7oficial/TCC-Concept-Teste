@@ -12,7 +12,7 @@ func Post(ctx *gin.Context) {
 
 	type dbstruct struct {
 		ID     int8
-		TESTE  bool
+		TESTE  string
 		RAMDOM float64
 	}
 
@@ -22,7 +22,7 @@ func Post(ctx *gin.Context) {
 		fmt.Print(err)
 	}
 
-	ctx.JSON(200, gin.H{
+	ctx.IndentedJSON(200, gin.H{
 		"status": "ok",
 		"Got":    newPost,
 	})
