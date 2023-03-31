@@ -25,7 +25,7 @@ import (
 func main(){
 	GOgin := gin.Default()
 
-	GOgin.Use(cors.All)
+	GOgin.Use(middleware.CORS_allow_all)
 	
 	GOgin.GET("/", routes.Hello)
 

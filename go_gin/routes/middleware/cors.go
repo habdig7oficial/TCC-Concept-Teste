@@ -13,14 +13,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>
 */
 
-package cors
+package middleware
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
-func All(ctx *gin.Context){
+func CORS_allow_all(ctx *gin.Context){
 	fmt.Print(true)
 	fmt.Print(ctx)
 
