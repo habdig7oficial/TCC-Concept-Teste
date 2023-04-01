@@ -7,14 +7,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
+	"go_gin/config"
 	"github.com/gin-gonic/gin"
 )
 
 func Post(c *gin.Context) {
 
 	type request struct {
-		ID     string `form:"id"`
+		ID    int8 `form:"id"`
 		Teste bool `form:"teste"`
 		Random float64 `form:"random"`
 	}
@@ -28,6 +28,15 @@ func Post(c *gin.Context) {
 	
 
 	fmt.Print(req)
+
+
+	postgres := db.Connect()
+
+
+	insert := postgres.QueryRow(`INSERT INTO teste(id, teste, random)
+		VALUES( $1, $2, $3);`, req.ID, req.Teste, req.Random)
+	fmt.Print("\n\ninsert - ", insert, "\n\n")
+
 	
 	c.JSON(http.StatusOK, gin.H{"status": "you are logged in", "got" : req})
 }
