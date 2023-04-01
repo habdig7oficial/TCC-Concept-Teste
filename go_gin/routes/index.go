@@ -82,5 +82,6 @@ func Hello(ctx *gin.Context){
 		"license_notice": license_notice,
 		"query_params": params,
 		"dbvalue": found,
+		"cache": mc
 	})
 }
