@@ -11,7 +11,17 @@
     <h1>licensa: {{  posts.license }}</h1>
     <h1>Query Params: {{  posts.query_params }}</h1>
     <h1>Query Params: {{  posts.dbvalue }}</h1>
+    <h1>Cache Params: {{  posts.cache }}</h1>
   </div>
+
+
+  <form action="http://0.0.0.0:7777/" method="post">
+    <input name="id" type="text" placeholder="id">
+    <input name="teste" type="text" placeholder="teste">
+    <input name="random" type="number" placeholder="number">
+    <input type="submit" value="send">
+  </form>
+
 </template>
 
 <script setup lang="ts">

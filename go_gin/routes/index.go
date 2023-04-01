@@ -22,6 +22,7 @@ import (
 	"go_gin/config/utilities"
 	"github.com/gin-gonic/gin"
 )
+
 func Hello(ctx *gin.Context){
 	redis_ctx := context.Background()
 	cache := db.Cache()
@@ -29,9 +30,18 @@ func Hello(ctx *gin.Context){
 	fmt.Print(cache)
 
 	id := 2
-	mc := cache.Set(redis_ctx, fmt.Sprint("%s",id), `teste`, 0).Err()
+	mc := cache.Set(redis_ctx, `teste`, `teste`, 0).Err()
 
 	fmt.Print(mc)
+
+	rc, rc_err := cache.Get(redis_ctx, "teste").Result()
+
+	if rc_err != nil{
+		fmt.Print(rc_err)
+	}
+
+	fmt.Print("\n",rc, "\n")
+
 	/**/
 
 	postgres := db.Connect()
@@ -82,6 +92,6 @@ func Hello(ctx *gin.Context){
 		"license_notice": license_notice,
 		"query_params": params,
 		"dbvalue": found,
-		"cache": mc
+		"cache": rc,
 	})
 }

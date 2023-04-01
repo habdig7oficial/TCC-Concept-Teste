@@ -28,7 +28,7 @@ func main(){
 	GOgin.Use(middleware.CORS_allow_all)
 	
 	GOgin.GET("/", routes.Hello)
-
+	GOgin.POST("/", routes.Post)
 
 	GOgin.Run("localhost:7777")
 }
